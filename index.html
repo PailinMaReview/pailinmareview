@@ -284,7 +284,17 @@ if(!visited){visited=true;S.visits++;sb.rpc('inc_visit')}
 var pt='';for(var i=0;i<12;i++)pt+='<span class="petal" style="left:'+Math.random()*100+'%;--dx:'+(Math.random()*160-80)+'px;animation-duration:'+(12+Math.random()*10)+'s;animation-delay:-'+Math.random()*15+'s">🌹</span>';
 return '<div class="nav"><div class="nav-in"><a class="brand" href="#">'+logo()+e(S.site.name)+'</a><a class="btn" href="#products" data-go="products">ดูสินค้า</a></div></div>'+
 '<section class="hero"><div class="cloud c1"></div><div class="cloud c2"></div>'+pt+'<span class="pill">🌹 รวมลิงก์รีวิว &amp; ช่องทางติดตาม</span><h1>'+S.site.title+'</h1><p>'+e(S.site.sub)+'</p><div class="soc top">'+socs()+'</div></section>'+
-'<div class="sec" id="products"><div class="search"><input id="q" type="search" placeholder="🔍 ค้นหาสินค้าจากชื่อ..." value="'+e(q)+'"><select id="catfilter" aria-label="เลือกหมวดหมู่"><option value="ทั้งหมด">ทุกหมวดหมู่</option>'+S.cats.map(function(c){return '<option value="'+e(c)+'"'+(c===cat?' selected':'')+'>'+e(c)+'</option>'}).join('')+'</select></div><div class="track" id="plist">'+pl()+'</div></div>'+
+'<div class="sec" id="products">'+
+'<div class="search" style="display:grid!important;grid-template-columns:minmax(0,1fr) clamp(116px,22%,230px)!important;gap:10px!important;width:100%!important;align-items:stretch!important;">'+
+'<input id="q" type="search" placeholder="🔍 ค้นหาสินค้าจากชื่อ..." value="'+e(q)+'" style="display:block!important;width:100%!important;min-width:0!important;height:52px!important;min-height:52px!important;box-sizing:border-box!important;margin:0!important;">'+
+'<select id="catfilter" aria-label="เลือกหมวดหมู่" style="display:block!important;width:100%!important;min-width:0!important;max-width:none!important;height:52px!important;min-height:52px!important;box-sizing:border-box!important;margin:0!important;">'+
+'<option value="ทั้งหมด">ทุกหมวดหมู่</option>'+
+S.cats.map(function(c){
+return '<option value="'+e(c)+'"'+(c===cat?' selected':'')+'>'+e(c)+'</option>'
+}).join('')+
+'</select>'+
+'</div>'+
+'<div class="track" id="plist">'+pl()+'</div></div>'+
 '<footer><div class="brand" style="justify-content:center">'+logo()+e(S.site.name)+'</div><div style="font-size:11px;margin-top:10px">© 2026 '+e(S.site.name)+' · <a href="#admin" style="text-decoration:underline">admin</a></div></footer>'}
 function modal(id){var p=S.prods.find(function(x){return x.id===id});if(!p)return;p.views++;sb.rpc('inc_view',{pid:id});var gallery=imgsOf(p),main=gallery[0]||'';
 $('#md').innerHTML='<div class="modal" data-close><div class="mbox"><button class="x" data-close>✕</button><div class="gallery"><div class="im">'+(main?'<img id="modalmain" src="'+e(main)+'" alt="'+e(p.name)+'">':e(p.emo||'🌹'))+'</div>'+(gallery.length>1?'<div class="thumbs">'+gallery.map(function(u,i){return '<button type="button" class="thumbbtn" data-gallery="'+i+'"><img src="'+e(u)+'" alt="ภาพที่ '+(i+1)+'"></button>'}).join('')+'</div>':'')+'</div><div class="tx"><span class="pill" style="align-self:flex-start">'+e(catsOf(p).join(' · '))+'</span><h2>'+e(p.name)+'</h2>'+(+p.price>0?'<b style="color:var(--olive);font-size:22px">฿'+Number(p.price).toLocaleString()+'</b>':'')+'<p>'+e(p.desc)+'</p><div class="acts">'+p.links.filter(function(k){return k.u}).map(function(k){return '<a class="btn" style="background:'+cc(k.c)+';color:'+tc(k.c)+'" data-buy="'+p.id+'" href="'+url(k.u)+'" target="_blank" rel="noopener">'+e(k.l||'สั่งซื้อ')+'</a>'}).join('')+'</div></div></div></div>'}
